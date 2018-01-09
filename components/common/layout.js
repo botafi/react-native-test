@@ -10,12 +10,10 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#fff'
   },
-  scrollView: {
+  content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     width: '100%',
-    backgroundColor: 'red'
+    backgroundColor: '#EBEBEB'
   }
 });
 
@@ -24,10 +22,9 @@ const Layout = ({ children, navigation }) => {
     <View style={styles.view}>
       <StatusBar translucent={false} barStyle="light-content" />
       <Header navigation={navigation}/>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <Text>Layout test</Text>
+      <View style={styles.content}>
         {children}
-      </ScrollView>
+      </View>
     </View>
   );
 };

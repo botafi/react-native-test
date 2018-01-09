@@ -14,7 +14,7 @@ export default DrawerNavigator({
             drawerLabel: 'Calculator Page',
             drawerIcon: ({ tintColor, focused }) => (
                 <Ionicons
-                    name={focused ? 'ios-home' : 'ios-home-outline'}
+                    name={focused ? 'ios-calculator' : 'ios-calculator-outline'}
                     size={26}
                     color={tintColor}
                 />
@@ -27,7 +27,7 @@ export default DrawerNavigator({
             drawerLabel: 'Norms Page',
             drawerIcon: ({ tintColor, focused }) => (
                 <Ionicons
-                    name={focused ? 'ios-home' : 'ios-home-outline'}
+                    name={focused ? 'ios-cube' : 'ios-cube-outline'}
                     size={26}
                     color={tintColor}
                 />

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Header, Button } from 'react-native-elements';
+import PropTypes from 'prop-types';
+import { Header } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -22,7 +23,7 @@ class LeftComponent extends Component {
   render() {
     return (
         <Ionicons
-          name={'ios-menu'}
+          name="ios-menu"
           size={26}
           color="white"
           onPress={this.openDrawer}
@@ -31,18 +32,37 @@ class LeftComponent extends Component {
   }
 }
 
+class RightComponent extends Component {
+
+  render() {
+    return (
+        <Ionicons
+          name="ios-information-circle-outline"
+          size={26}
+          color="white"
+          // onPress={this.openDrawer}
+        />
+    );
+  }
+}
+
 class HeaderComponent extends Component {
   render() {
-    console.log('header', this.props)
+    const { navigation } = this.props;
+
     return (
       <Header
         style={styles.header}
         leftComponent={<LeftComponent navigation={this.props.navigation}/>}
-        centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-        rightComponent={{ icon: 'home', color: '#fff' }}
+        centerComponent={{ text: navigation.state.routeName.toUpperCase() || 'TITLE', style: { color: '#fff' } }}
+        rightComponent={<RightComponent navigation={this.props.navigation}/>}
       />
     );
   }
 }
+
+HeaderComponent.propTypes = {
+  navigation: PropTypes.object.isRequired
+};
 
 export default HeaderComponent;
