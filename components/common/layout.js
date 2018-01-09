@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 const Layout = ({ children, navigation }) => {
   return (
     <View style={styles.view}>
-      <StatusBar translucent={false} barStyle="ligh-content" />
+      <StatusBar translucent={false} barStyle="light-content" />
       <Header navigation={navigation}/>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <Text>Layout test</Text>
