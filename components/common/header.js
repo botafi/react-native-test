@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Header, Button } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
-import { Ionicons } from 'react-native-vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   header: {
@@ -12,8 +12,10 @@ const styles = StyleSheet.create({
 class LeftComponent extends Component {
 
   openDrawer = () => {
-    if (this.props.navigation) {
-      this.props.navigation.navigate('DrawerOpen')
+    const { navigation } = this.props;
+
+    if (navigation) {
+      navigation.navigate('DrawerOpen');
     }
   };
 
@@ -22,7 +24,7 @@ class LeftComponent extends Component {
         <Ionicons
           name={'ios-menu'}
           size={26}
-          style={{color: '#fff'}}
+          color="white"
           onPress={this.openDrawer}
         />
     );
@@ -35,7 +37,7 @@ class HeaderComponent extends Component {
     return (
       <Header
         style={styles.header}
-        leftComponent={<LeftComponent {...this.props}/>}
+        leftComponent={<LeftComponent navigation={this.props.navigation}/>}
         centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
         rightComponent={{ icon: 'home', color: '#fff' }}
       />

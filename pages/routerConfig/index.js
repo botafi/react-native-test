@@ -1,6 +1,6 @@
 import React from 'react';
 import { DrawerNavigator, TabNavigator } from 'react-navigation';
-import { Ionicons } from 'react-native-vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import Layout from '../../components/common/layout';
 // import screens
@@ -16,7 +16,7 @@ export default DrawerNavigator({
                 <Ionicons
                     name={focused ? 'ios-home' : 'ios-home-outline'}
                     size={26}
-                    style={{ color: tintColor }}
+                    color={tintColor}
                 />
             )
         }
@@ -29,7 +29,7 @@ export default DrawerNavigator({
                 <Ionicons
                     name={focused ? 'ios-home' : 'ios-home-outline'}
                     size={26}
-                    style={{ color: tintColor }}
+                    color={tintColor}
                 />
             )
         }

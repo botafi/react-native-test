@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   scrollView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     backgroundColor: 'red'
   }
@@ -20,8 +23,8 @@ class Layout extends Component {
     console.log('layout', this.props)
     return (
       <View style={styles.view}>
-        <Header {...this.props}/>
-        <ScrollView style={styles.scrollView}>
+        <Header navigation={this.props.navigation}/>
+        <ScrollView contentContainerStyle={styles.scrollView}>
           <Text>Layout test</Text>
           {this.props.children}
         </ScrollView>

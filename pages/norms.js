@@ -16,9 +16,12 @@ class NormsPage extends Component {
 
   render() {
     return (
-      <Layout {...this.props}>
+      // <Layout navigation={this.props.navigation}>
+      //   <Text>Norms Page</Text>
+      // </Layout>
+      <View style={styles.container}>
         <Text>Norms Page</Text>
-      </Layout>
+      </View>
     );
   }
 }
