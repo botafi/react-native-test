@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import { StyleSheet, View, ScrollView, Text, StatusBar } from 'react-native';
 
 import Header from './header';
 
@@ -18,19 +19,24 @@ const styles = StyleSheet.create({
   }
 });
 
-class Layout extends Component {
-  render() {
-    console.log('layout', this.props)
-    return (
-      <View style={styles.view}>
-        <Header navigation={this.props.navigation}/>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <Text>Layout test</Text>
-          {this.props.children}
-        </ScrollView>
-      </View>
-    );
-  }
-}
+const Layout = ({ children, navigation }) => {
+  return (
+    <View style={styles.view}>
+      <StatusBar translucent={false} barStyle="ligh-content" />
+      <Header navigation={navigation}/>
+      <ScrollView contentContainerStyle={styles.scrollView}>
+        <Text>Layout test</Text>
+        {children}
+      </ScrollView>
+    </View>
+  );
+};
+
+Layout.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+};
 
 export default Layout;
