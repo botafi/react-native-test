@@ -18,12 +18,9 @@ class CalculatorPage extends Component {
     console.log('calc', this.props);
 
     return (
-      // <Layout navigation={this.props.navigation}>
-      //   <Text>Calculator kkkkbkjk Page</Text>
-      // </Layout>
-      <View style={styles.container}>
+      <Layout navigation={this.props.navigation}>
         <Text>Calculator kkkkbkjk Page</Text>
-      </View>
+      </Layout>
     );
   }
 }

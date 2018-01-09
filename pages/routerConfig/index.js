@@ -35,6 +35,7 @@ export default DrawerNavigator({
         }
     }
 }, {
+    initialRouteName: 'Calculator',
     headerMode: 'screen',
     drawerPosition: 'left',
     drawerOpenRoute: 'DrawerOpen',
