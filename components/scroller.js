@@ -1,6 +1,6 @@
 import React, { Component, PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { FlatList, Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { FlatList, Text, StyleSheet, View, TouchableOpacity, Button } from 'react-native';
 
 const styles = StyleSheet.create({
   text: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   container: {
-    height: 80,
+    height: 120,
     width: '100%',
     alignItems: 'center',
     overflow: 'hidden',
@@ -16,12 +16,16 @@ const styles = StyleSheet.create({
     borderColor: '#000',
   },
   flatList: {
-    width: '100%',
+    flex: 1
   },
   flatListContent: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    // height: 25
+  },
+  listItem: {
+
   }
 });
 
@@ -30,7 +34,7 @@ class ListItem extends PureComponent {
     const { selected, item, onPressItem, title } = this.props;
     const style = {
       minWidth: '100%',
-      backgroundColor: selected ? '#3E6EC7' : '#fff',
+      backgroundColor: selected ? '#C3DDC3' : '#fff',
       alignItems: 'center',
       justifyContent: 'center',
       display: 'flex'
@@ -39,7 +43,11 @@ class ListItem extends PureComponent {
     return (
       <TouchableOpacity onPress={() => onPressItem(item)} style={style}>
         <View style={styles.flatListContent}>
-          <Text style={{ color: selected ? '#fff' : 'black', fontWeight: 'bold' }}>
+          <Text style={{
+            fontSize: 20,
+            color: selected ? '#000' : '#C3C3C3',
+            fontWeight: selected ? 'bold' : 'normal',
+          }}>
             {title}
           </Text>
         </View>
@@ -62,34 +70,49 @@ ListItem.propTypes = {
   item: PropTypes.object
 };
 
-// test data
-let data = [];
-for (let i = 0; i < 15; i++) {
-  data.push({ key: `${i}` });
-}
+
 
 class Scroller extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    this.scrollToItem(this.props.selectedItem.key);
+  }
 
-    this.state = {
-      selectedItem: { key: '2' }
-    };
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedItem.key !== this.props.selectedItem.key) {
+      this.scrollToItem(nextProps.selectedItem.key);
+    }
   }
 
   onItemPress = (item) => {
-    this.setState({
-      selectedItem: item
-    });
+    // this.scrollToItem(item.key);
+    const { onItemPress } = this.props;
+
+    if (typeof onItemPress === 'function') {
+      onItemPress(item);
+    }
+  };
+
+  scrollToItem = (idx) => {
+    if (idx) {
+      // this.flatListRef.scrollToIndex({ animated: true, index: Math.floor(idx * this.props.data.length) });
+      this.flatListRef.scrollToIndex({ animated: true, index: idx });
+    }
+  }
+
+  getItemLayout = (data, index) => {
+    // return { length: data.length, offset: data.slice(0, index).length, index };
+    return { length: data.length, offset: data.length * index, index };
+    // { length: 50, offset: 50 * index, index }
   };
 
   renderItem = ({ item }) => {
     return (
       <ListItem
+        style={styles.listItem}
         id={item.key}
         item={item}
         onPressItem={this.onItemPress}
-        selected={this.state.selectedItem.key === item.key}
+        selected={this.props.selectedItem.key === item.key}
         title={item.key}
       />
     );
@@ -99,16 +122,25 @@ class Scroller extends Component {
     return (
       <View style={styles.container}>
         <FlatList
-          extraData={this.state}
+          ref={ref => this.flatListRef = ref}
+          extraData={this.props.selectedItem}
           keyExtractor={(item) => item.key}
           renderItem={this.renderItem}
           style={styles.flatList}
           contentContainerStyle={styles.flatListContent}
-          data={data}
+          data={this.props.data}
+          initialScrollIndex={0}
+          getItemLayout={this.getItemLayout}
+          scrollToIndex={this.scrollToItem}
         />
       </View>
     );
   }
 }
+Scroller.propTypes = {
+  selectedItem: PropTypes.object,
+  data: PropTypes.array,
+  onItemPress: PropTypes.func
+};
 
 export default Scroller;

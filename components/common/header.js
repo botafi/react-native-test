@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Header } from 'react-native-elements';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   header: {
-    width: '100%'
+    width: '100%',
+    height: '100%'
+  },
+  container: {
+    height: 85
   }
 });
 
@@ -53,6 +57,7 @@ class HeaderComponent extends Component {
     return (
       <Header
         style={styles.header}
+        outerContainerStyles={styles.container}
         leftComponent={<LeftComponent navigation={this.props.navigation}/>}
         centerComponent={{ text: navigation.state.routeName.toUpperCase() || 'TITLE', style: { color: '#fff' } }}
         rightComponent={<RightComponent navigation={this.props.navigation}/>}
