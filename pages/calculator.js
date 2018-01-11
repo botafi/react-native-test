@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 
 // scroller test data
 let scrollerData = [];
-for (let i = 0; i < 15; i++) {
+for (let i = 0; i < 25; i++) {
   scrollerData.push({ key: i });
 }
 

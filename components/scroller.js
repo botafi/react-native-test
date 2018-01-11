@@ -101,7 +101,8 @@ class Scroller extends Component {
 
   getItemLayout = (data, index) => {
     // return { length: data.length, offset: data.slice(0, index).length, index };
-    return { length: data.length, offset: data.length * index, index };
+    // return { length: data.length, offset: data.length * index, index };
+    return { length: data.length, offset: 23 * index, index };
     // { length: 50, offset: 50 * index, index }
   };
 
@@ -129,9 +130,10 @@ class Scroller extends Component {
           style={styles.flatList}
           contentContainerStyle={styles.flatListContent}
           data={this.props.data}
-          initialScrollIndex={0}
           getItemLayout={this.getItemLayout}
           scrollToIndex={this.scrollToItem}
+          showsVerticalScrollIndicator={false}
+          pagingEnabled
         />
       </View>
     );
