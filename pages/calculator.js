@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Layout from '../components/common/layout';
 import AppText from '../components/appText';
 import Scroller from '../components/scroller';
-// import ScrollerView from '../components/scrollerView';
 
 const styles = StyleSheet.create({
   container: {
@@ -83,10 +82,7 @@ class CalculatorPage extends Component {
             data={scrollerData}
             selectedItem={this.state.selectedItem}
           />
-          {/*<ScrollerView
-            data={scrollerData}
-            selectedItem={this.state.selectedItem}
-          />*/}
+
           <Button
             onPress={() => this.setState({ selectedItem: { key: 8 }})}
             title="Tap to scrollToItem"
