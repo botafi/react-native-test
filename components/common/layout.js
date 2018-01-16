@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, ScrollView, Text, StatusBar } from 'react-native';
+import { StyleSheet, View, Text, StatusBar } from 'react-native';
 
 import Header from './header';
 

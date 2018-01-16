@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 import Layout from '../components/common/layout';
 import AppText from '../components/appText';
 import Scroller from '../components/scroller';
+import Scroller2 from '../components/scroller/scroller2';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,6 +48,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
+  scrollerContainer: {
+    width: '100%',
+    height: 150,
+  }
 });
 
 // scroller test data
@@ -61,7 +66,7 @@ class CalculatorPage extends Component {
     min: 2.5,
     totalWeight: 32.678,
     totalMeters: '1',
-    selectedItem: { key: 4 }
+    selectedItem: { key: 2 }
   };
 
   onItemClick = (item) => {
@@ -77,11 +82,22 @@ class CalculatorPage extends Component {
           <AppText type="title">Weights of steel tubes</AppText>
           <AppText>{`Outside diameter ${this.state.max} - ${this.state.min} mm`}</AppText>
 
-          <Scroller
+          {/*<Scroller
             onItemPress={this.onItemClick}
             data={scrollerData}
             selectedItem={this.state.selectedItem}
-          />
+          />*/}
+          <View style={styles.scrollerContainer}>
+            <Scroller2
+              selectedItem={this.state.selectedItem}
+              onItemPress={this.onItemClick}
+              data={scrollerData}
+              style={{
+                width: 125,
+                height: 150
+              }}
+            />
+          </View>
 
           <Button
             onPress={() => this.setState({ selectedItem: { key: 8 }})}
