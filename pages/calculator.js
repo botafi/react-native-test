@@ -3,8 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 import Layout from '../components/common/layout';
 import AppText from '../components/appText';
-import Scroller from '../components/scroller';
-import Scroller2 from '../components/scroller/scroller2';
+import Scroller from '../components/scroller/scroller';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,10 +54,12 @@ const styles = StyleSheet.create({
 });
 
 // scroller test data
-let scrollerData = [];
+let scrollerData = [{ key: '--', helper: true }];
 for (let i = 0; i < 25; i++) {
   scrollerData.push({ key: i });
 }
+scrollerData.push({ key: '--', helper: true });
+const ITEM_HEIGHT = 50;
 
 class CalculatorPage extends Component {
   state = {
@@ -66,7 +67,7 @@ class CalculatorPage extends Component {
     min: 2.5,
     totalWeight: 32.678,
     totalMeters: '1',
-    selectedItem: { key: 2 }
+    selectedItem: { key: 11 }
   };
 
   onItemClick = (item) => {
@@ -82,28 +83,17 @@ class CalculatorPage extends Component {
           <AppText type="title">Weights of steel tubes</AppText>
           <AppText>{`Outside diameter ${this.state.max} - ${this.state.min} mm`}</AppText>
 
-          {/*<Scroller
-            onItemPress={this.onItemClick}
-            data={scrollerData}
-            selectedItem={this.state.selectedItem}
-          />*/}
           <View style={styles.scrollerContainer}>
-            <Scroller2
+            <Scroller
               selectedItem={this.state.selectedItem}
               onItemPress={this.onItemClick}
               data={scrollerData}
               style={{
                 width: 125,
-                height: 150
+                height: 151
               }}
             />
           </View>
-
-          <Button
-            onPress={() => this.setState({ selectedItem: { key: 8 }})}
-            title="Tap to scrollToItem"
-            color="purple"
-          />
 
           <View style={styles.inputContainer}>
             <TextInput

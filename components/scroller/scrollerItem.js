@@ -1,20 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: 'bold'
   },
-  // container: {
-  //   height: 120,
-  //   width: '100%',
-  //   alignItems: 'center',
-  //   overflow: 'hidden',
-  //   borderWidth: 1,
-  //   borderColor: 'grey'
-  // },
   flatList: {
     flex: 1
   },
@@ -27,19 +19,29 @@ const styles = StyleSheet.create({
 
 class ScrollerItem extends PureComponent {
   render() {
-    const { selected, item, onPressItem, title } = this.props;
+    const { selected, item, onPressItem, title, itemHeight } = this.props;
     const style = {
       minWidth: '100%',
-      height: 50,
-      backgroundColor: selected ? '#C3DDC3' : '#fff',
+      height: itemHeight,
+      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
       display: 'flex',
-      borderWidth: 1,
-      borderColor: selected ? '#000' : 'grey',
+
     };
 
-    return (
+    return item.helper ? (
+      <View style={style}>
+        <Text style={{
+          fontSize: 20,
+          color: selected ? '#000' : '#C3C3C3',
+          fontWeight: selected ? 'bold' : 'normal',
+          zIndex: 10
+        }}>
+          {title}
+        </Text>
+      </View>
+    ) : (
       <TouchableOpacity onPress={() => onPressItem(item)} style={style}>
         <Text style={{
           fontSize: 20,
@@ -55,7 +57,8 @@ class ScrollerItem extends PureComponent {
 ScrollerItem.defaultProps = {
   title: 'title',
   selected: false,
-  onPressItem: () => {}
+  onPressItem: () => {},
+  itemHeight: 50
 };
 ScrollerItem.propTypes = {
   title: PropTypes.oneOfType([
@@ -63,7 +66,8 @@ ScrollerItem.propTypes = {
   ]),
   selected: PropTypes.bool,
   onPressItem: PropTypes.func,
-  item: PropTypes.object
+  item: PropTypes.object,
+  itemHeight: PropTypes.number
 };
 
 export default ScrollerItem;

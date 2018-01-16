@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Layout from '../components/common/layout';
-import Scroller2 from '../components/scroller/scroller2';
+import Scroller from '../components/scroller/scroller';
 
 const styles = StyleSheet.create({
   container: {
