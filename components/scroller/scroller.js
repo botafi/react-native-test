@@ -37,13 +37,15 @@ class Scroller extends Component {
     };
     this.scrollViewEl = null;
   }
-
+  scrollToItem = (item) => {
+    this.scrollViewEl.scrollTo({ x: 0, y: item.key * ITEM_HEIGHT, animated: false });
+  }
   componentDidMount() {
-    this.scrollViewEl.scrollTo({ x: 0, y: this.state.selectedItem.key * ITEM_HEIGHT, animated: true });
+    this.scrollToItem(this.state.selectedItem);
   }
 
   render() {
-    const { data, style, onItemPress } = this.props;
+    const { data, style, onItemPress, onScroll, onSelectedItemChanged} = this.props;
     const styles = getStyles(this.props);
     return (
       <View style={styles.container}>
@@ -56,7 +58,8 @@ class Scroller extends Component {
           snapToInterval={ITEM_HEIGHT}
           indicatorStyle="black"
           snapToAlignment="center"
-          onScroll={() => {
+          onScroll={(e) => {
+            onScroll(e);
             this.setState({
               selectedItem: { key: null }
             });
@@ -69,6 +72,7 @@ class Scroller extends Component {
               this.setState({
                 selectedItem: { key: index }
               }, () => {
+                onSelectedItemChanged({key: index});
                 if (Platform.OS === 'android') {
                   this.scrollViewEl.scrollTo({ x: 0, y: index * ITEM_HEIGHT, animated: true });
                 }
@@ -95,14 +99,18 @@ Scroller.defaultProps = {
   data: [],
   style: {},
   selectedItem: null,
-  onItemPress: () => {}
+  onItemPress: () => {},
+  onScroll: () => {},
+  onSelectedItemChanged: () => {},
 };
 
 Scroller.propTypes = {
   data: PropTypes.array,
   style: PropTypes.object,
   selectedItem: PropTypes.any,
-  onItemPress: PropTypes.func
+  onItemPress: PropTypes.func,
+  onScroll: PropTypes.func,
+  onSelectedItemChanged: PropTypes.func
 };
 
 export default Scroller;

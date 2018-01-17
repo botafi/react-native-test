@@ -59,6 +59,7 @@ for (let i = 0; i < 25; i++) {
   scrollerData.push({ key: i });
 }
 scrollerData.push({ key: '--', helper: true });
+let scrollerData2 = [...scrollerData];
 const ITEM_HEIGHT = 50;
 
 class CalculatorPage extends Component {
@@ -67,15 +68,35 @@ class CalculatorPage extends Component {
     min: 2.5,
     totalWeight: 32.678,
     totalMeters: '1',
-    selectedItem: { key: 11 }
+    selectedItem: { key: 11 },
+    selectedItem2: { key: 22 },
+    conversionRatio: 1,
   };
-
-  onItemClick = (item) => {
-    this.setState({
-      selectedItem: item
-    });
+  lastScroll = 0;
+  onScroll = (e) => {
+    const {velocity, contentOffset} = e.nativeEvent;
+    if(this.lastScroll === 1) {
+      this.scrollEl2.scrollViewEl.scrollTo({x: 0, y: contentOffset.y, animated: false});
+    }
   };
-
+  onScroll2 = (e) => {
+    const {velocity, contentOffset} = e.nativeEvent;
+    if(this.lastScroll === 2) {
+      this.scrollEl.scrollViewEl.scrollTo({x: 0, y: contentOffset.y, animated: false});
+    }
+  };
+  onSelectItem = (selectedItem) => {
+    this.setState({selectedItem});
+    if(this.lastScroll === 1) {
+      this.scrollEl2.scrollToItem(selectedItem);
+    }
+  };
+  onSelectItem2 = (selectedItem2) => {
+    this.setState({selectedItem2});
+    if(this.lastScroll === 2) {
+      this.scrollEl.scrollToItem(selectedItem2);
+    }
+  };
   render() {
     return (
       <Layout navigation={this.props.navigation}>
@@ -83,7 +104,14 @@ class CalculatorPage extends Component {
           <AppText type="title">Weights of steel tubes</AppText>
           <AppText>{`Outside diameter ${this.state.max} - ${this.state.min} mm`}</AppText>
 
-          <View style={styles.scrollerContainer}>
+          <View
+            style={styles.scrollerContainer}
+            onResponderGrant={e => this.lastScroll = 1}
+            onResponderRelease={e => this.lastScroll = 1}
+            onResponderReject={e => this.lastScroll = 1}
+            onStartShouldSetResponder={e => this.lastScroll = 1}
+            onMoveShouldSetResponder={e => this.lastScroll = 1}
+          >
             <Scroller
               selectedItem={this.state.selectedItem}
               onItemPress={this.onItemClick}
@@ -92,6 +120,30 @@ class CalculatorPage extends Component {
                 width: 125,
                 height: 151
               }}
+              onScroll={this.onScroll}
+              onSelectedItemChanged={this.onSelectItem}
+              ref={ref => this.scrollEl = ref}
+            />
+          </View>
+          <View
+            style={styles.scrollerContainer}
+            onResponderGrant={e => this.lastScroll = 2}
+            onResponderRelease={e => this.lastScroll = 2}
+            onResponderReject={e => this.lastScroll = 2}
+            onStartShouldSetResponder={e => this.lastScroll = 2}
+            onMoveShouldSetResponder={e => this.lastScroll = 2}
+          >
+            <Scroller
+              selectedItem={this.state.selectedItem2}
+              onItemPress={this.onItemClick2}
+              data={scrollerData2}
+              style={{
+                width: 125,
+                height: 151
+              }}
+              onScroll={this.onScroll2}
+              onSelectedItemChanged={this.onSelectItem2}
+              ref={ref => this.scrollEl2 = ref}
             />
           </View>
 
